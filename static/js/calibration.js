@@ -1,25 +1,23 @@
-// calibration.js
-
 let screenW = window.innerWidth;
 let screenH = window.innerHeight;
 
 let calibrationPoints = [
-  { x: screenW * 0.1, y: screenH * 0.1 }, // Top-left
-  { x: screenW * 0.25, y: screenH * 0.1 }, // Top-center
-  { x: screenW * 0.5, y: screenH * 0.1 }, // Top-left
-  { x: screenW * 0.75, y: screenH * 0.1 }, // Top-center
-  { x: screenW * 0.9, y: screenH * 0.1 }, // Top-right
+  { x: screenW * 0.1, y: screenH * 0.1 },
+  { x: screenW * 0.25, y: screenH * 0.1 },
+  { x: screenW * 0.5, y: screenH * 0.1 },
+  { x: screenW * 0.75, y: screenH * 0.1 },
+  { x: screenW * 0.9, y: screenH * 0.1 },
 
-  { x: screenW * 0.1, y: screenH * 0.5 }, // Mid-left
-  { x: screenW * 0.25, y: screenH * 0.5 }, // Center
-  { x: screenW * 0.5, y: screenH * 0.5 }, // Mid-left
+  { x: screenW * 0.1, y: screenH * 0.5 },
+  { x: screenW * 0.25, y: screenH * 0.5 },
+  { x: screenW * 0.5, y: screenH * 0.5 },
   { x: screenW * 0.75, y: screenH * 0.5 },
-  { x: screenW * 0.9, y: screenH * 0.5 }, // Mid-right
+  { x: screenW * 0.9, y: screenH * 0.5 },
 
-  { x: screenW * 0.1, y: screenH * 0.9 }, // Bottom-left
-  { x: screenW * 0.25, y: screenH * 0.9 }, // Bottom-center
-  { x: screenW * 0.5, y: screenH * 0.9 },  // Bottom-right
-  { x: screenW * 0.75, y: screenH * 0.9 }, // Bottom-left
+  { x: screenW * 0.1, y: screenH * 0.9 },
+  { x: screenW * 0.25, y: screenH * 0.9 },
+  { x: screenW * 0.5, y: screenH * 0.9 },
+  { x: screenW * 0.75, y: screenH * 0.9 },
   { x: screenW * 0.9, y: screenH * 0.9 },
 ];
 
@@ -47,7 +45,7 @@ function startCalibration() {
 
     document.body.appendChild(dot);
 
-    dot.addEventListener("click", () => {
+    setTimeout(() => {
       const prediction = webgazer.getCurrentPrediction();
 
       if (prediction) {
@@ -59,13 +57,13 @@ function startCalibration() {
         });
         console.log(` Captured at point ${i + 1}:`, prediction);
       } else {
-        console.warn(" No gaze prediction available");
+        console.warn(` No gaze prediction available at point ${i + 1}`);
       }
 
       document.body.removeChild(dot);
       i++;
-      setTimeout(showNextPoint, 500);
-    });
+      setTimeout(showNextPoint, 500); // short delay between dots
+    }, 2000); // wait time for user to fixate on the dot
   }
 
   showNextPoint();
